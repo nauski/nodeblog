@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
+var upload = multer({ dest: './public/images' });
 //var moment = require('moment');
 var expressValidator = require('express-validator');
 
@@ -15,12 +15,17 @@ var db = require('monk')('localhost/nodeblog');
 
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var posts = require('./routes/posts');
+var categories = require('./routes/categories');
 
 var app = express();
 
 app.locals.moment = require('moment');
 
+app.locals.truncateText = function(text, length){
+    var truncateText = text.substring(0, length);
+    return truncateText;
+}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -70,13 +75,16 @@ app.use(function(req, res, next){
 
 
 // make db accessible to router
-app.use(function(req, res, next){
-  req.db = db;
-  next();
+app.use(function(req,res,next){    
+    req.db = db;    
+    next();
+    
 });
 
+
 app.use('/', routes);
-app.use('/users', users);
+app.use('/posts', posts);
+app.use('/categories', categories);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

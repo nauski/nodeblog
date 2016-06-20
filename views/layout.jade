@@ -5,15 +5,16 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     .container
-      img.logo(src='/images/placeholder.png')
+      img.logo(src='/images/nodelogo.png')
       nav
         ul
-        li 
+        li.home 
           a(href='/') Home
         li 
           a(href='/posts/add') Add Post
         li
           a(href='/categories/add') Add Category
+      != messages()
       block content
       footer
         p nauski &copy; 2016
