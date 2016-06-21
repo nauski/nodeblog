@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/nodeblog');
-
-var db = mongoose.connection;
+var db = mongoose.createConnection('mongodb://localhost/nodeblog');
 
 // post schema
 
@@ -21,7 +19,10 @@ var PostSchema = mongoose.Schema({
     },
     author: {
         type: String
-    }
+    },
+	date: {
+		type: String
+	}
 });
 
 var Post = module.exports = mongoose.model('Post', PostSchema);

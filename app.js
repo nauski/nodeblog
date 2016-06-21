@@ -11,11 +11,13 @@ var expressValidator = require('express-validator');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var flash = ('connect-flash');
+var bcrypt = require('bcryptjs')
 // Routes
 var routes = require('./routes/index');
 var posts = require('./routes/posts');
 var categories = require('./routes/categories');
 var users = require('./routes/users');
+var admin = require('./routes/admin');
 // DB stuff 
 var mongo = require('mongodb');
 var db = require('monk')('localhost/nodeblog');
@@ -96,6 +98,7 @@ app.use('/', routes);
 app.use('/posts', posts);
 app.use('/categories', categories);
 app.use('/users/', users);
+app.use('/admin/', admin);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
