@@ -7,16 +7,20 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var multer = require('multer');
 var upload = multer({ dest: './public/images' });
-//var moment = require('moment');
 var expressValidator = require('express-validator');
-
-var mongo = require('mongodb');
-var db = require('monk')('localhost/nodeblog');
-
-
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var flash = ('connect-flash');
+// Routes
 var routes = require('./routes/index');
 var posts = require('./routes/posts');
 var categories = require('./routes/categories');
+var users = require('./routes/users');
+// DB stuff 
+var mongo = require('mongodb');
+var db = require('monk')('localhost/nodeblog');
+var mongoose = require('mongoose');
+var db2 = mongoose.connection;
 
 var app = express();
 
@@ -44,6 +48,12 @@ app.use(session({
 	saveUninitialized: true,
 	resave: true
 }));
+
+// Passport
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // express validator
 app.use(expressValidator({
@@ -85,7 +95,7 @@ app.use(function(req,res,next){
 app.use('/', routes);
 app.use('/posts', posts);
 app.use('/categories', categories);
-
+app.use('/users/', users);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

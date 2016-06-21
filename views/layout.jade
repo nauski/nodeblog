@@ -1,20 +1,33 @@
 doctype html
-html
+html(lang='en')
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    title Welcome
+    link(href='/stylesheets/bootstrap.css', rel='stylesheet')
+    link(href='/stylesheets/style.css', rel='stylesheet')
   body
+    .navbar.navbar-default(role='navigation')
+      .container
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Blog
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li(class=(title == 'Members' ? 'active' : ''))
+              a(href='/') Members
+            li(class=(title == 'Register' ? 'active' : ''))
+              a(href='/users/register') Register
+            li(class=(title == 'Login' ? 'active' : ''))
+              a(href='/users/login') Login
+          ul.nav.navbar-nav.navbar-right
+           li
+              a(href='/users/logout') Logout
     .container
-      img.logo(src='/images/nodelogo.png')
-      nav
-        ul
-        li.home 
-          a(href='/') Home
-        li 
-          a(href='/posts/add') Add Post
-        li
-          a(href='/categories/add') Add Category
-      != messages()
-      block content
-      footer
-        p nauski &copy; 2016
+     != messages()
+     block content
+     footer
+     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+     script(src='/javascripts/bootstrap.js')

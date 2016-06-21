@@ -12,5 +12,6 @@ block content
             by  #{post.author} on #{moment(post.date).format("DD-MM-YYYY")}
         if post.mainimage !== null
          img(src='/images/#{post.mainimage}')
+        // img(src='/images/#{post.mainimage}')
         !=truncateText(post.body, 400)
         a.more(href='/posts/show/#{post._id}') Read More
